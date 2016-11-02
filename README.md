@@ -55,6 +55,7 @@ app.service('postsService', function () {
 	return function (scope) {
 		scope.fetch = function () {};
 		...
+		return scope; // Very important!
 	};
 });
 ```
