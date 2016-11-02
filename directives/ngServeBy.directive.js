@@ -1,31 +1,30 @@
 (function(angular) {
-	'use strict';
-	
-	var app = angular.module('ngServeBy', []);
-	
+    'use strict';
+    
+    var app = angular.module('ngServeBy');
+    
     /**
      * [ngServeBy description]
-     * @param  {[type]} $log      [description]
-     * @param  {[type]} $injector [description]
-     * @return {[type]}           [description]
+     * @param  {ngModule} $log      [description]
+     * @param  {ngModule} $injector [description]
      */
-	var ngServeBy = function ($log, $injector) {
-		return {
+    var ngServeBy = function ($log, $injector) {
+        return {
             restrict: 'A',
-            transclude: true,
             scope: true,
-            link: function (scope, element, attrs) {
-                if (!attrs.ngServeBy) {
-                    $log.error('ngServeBy directive was called but did not receive any service as an argument');
-                }
+            compile: function () {
+                return {
+                    pre: function (scope, element, attrs) {
+                        if (!attrs.ngServeBy) {
+                            $log.error('ngServeBy directive was called but did not receive any service as an argument');
+                        }
 
-                transclude(function (clone) {
-                    $injector.get(attrs.ngServeBy)(scope);
-                    angular.element(element[0]).append(clone);
-                });
+                        scope = $injector.get(attrs.ngServeBy)(scope);
+                    }
+                };
             }
-		};
-	};
+        };
+    };
     
-	app.directive('ngServeBy', ngServeBy);
+    app.directive('ngServeBy', ngServeBy);
 }(angular));
