@@ -52,7 +52,7 @@ Define our services in a fashion that allows binding functions to the current sc
 **postsService.js**
 ```Javascript
 app.service('postsService', function () {
-	return function (scope) {
+	return function (scope) { // or function (scope, element, attrs) if you need to manipulate the DOM
 		scope.fetch = function () {};
 		...
 		return scope; // Very important!

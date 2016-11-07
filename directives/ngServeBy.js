@@ -19,7 +19,7 @@
                             $log.error('ngServeBy directive was called but did not receive any service as an argument');
                         }
 
-                        scope = $injector.get(attrs.ngServeBy)(scope);
+                        scope = $injector.get(attrs.ngServeBy)(scope, element, attrs);
                     }
                 };
             }
