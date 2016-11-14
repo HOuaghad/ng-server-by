@@ -49,21 +49,36 @@ div(ng-controller="postsController")
 
 ## Usage:
 Define our services in a fashion that allows binding functions to the current scope, as if in a controller, only now you could use the same service all across your app without having to create controllers:
+
 **postsService.js**
 ```Javascript
 app.service('postsService', function () {
+	// You can directly bind your vars/functions to the scope
+
 	return function (scope) { // or function (scope, element, attrs) if you need to manipulate the DOM
 		scope.fetch = function () {};
 		...
-		return scope; // Very important!
+	};
+
+	// or you can make use of the `as` syntax
+	return function (scope) { // or function (scope, element, attrs) if you need to manipulate the DOM
+		var self = this;
+		self.fetch = function () {};
+		...
 	};
 });
 ```
 
 And in your page:
 ```Jade
+// When you've bound your vars/functions to the scope.
 div(ng-serve-by="postsService")
 	div(ng-init="fetch()")
+		...
+		
+// When you've bound your vars/functions to `this` keyword.
+div(ng-serve-by="postsService as p")
+	div(ng-init="p.fetch()")
 		...
 ```
 
