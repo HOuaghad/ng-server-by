@@ -22,16 +22,15 @@
                         var serveAs = attrs.ngServeBy.split(' ');
 
                         if (serveAs.length === 3) {
-                            
+
                             (function (serviceName, serviceAs) {
                                 var service = $injector.get(serviceName);
                                 scope[serviceAs] = new service(scope, element, attrs);
                             } (serveAs[0], serveAs[2]));
-
+                            
                         } else {
-                            scope = $injector.get(serveAs[0])(scope, element, attrs);
+                            $injector.get(serveAs[0])(scope, element, attrs);
                         }
-                        
                     }
                 };
             }
